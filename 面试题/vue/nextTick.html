@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">hello</div>
+  <!-- <script>
+    const app = document.getElementById('app')
+    const config = { attributes: true, childList: true, subtree: true };
+    const callback = function (mutationsList) {
+      console.log(mutationsList);
+    }
+    const observer = new MutationObserver(callback);
+    observer.observe(app, config);
+
+
+    // 测试
+    app.addEventListener('click', () => {
+      app.innerHTML = 'hello world !!!'
+    })
+  </script> -->
+
+
+
+
+  <script>
+    // 1. 什么时候执行 cb 回调函数
+    // 2. 
+    function nextTick(cb) {  
+      return new Promise(resolve => {
+        function fn() {
+          return () => {
+            cb()
+            resolve()
+          }
+        }
+        // 当 DOM 结构渲染完成后，再执行回调
+        if (typeof MutationObserver !== 'undefined') {
+          const observer = new MutationObserver(fn())
+          observer.observe(document.body, {
+            childList: true,
+            subtree: true
+          })
+        } else {
+          setTimeout(fn(), 0)
+        }
+      })
+    }
+  
+    const app = document.getElementById('app')
+
+    nextTick(() => {
+      console.log(app.innerHTML);
+    }).then(() => {
+      console.log(app.innerHTML, 'then');
+    })
+
+    app.addEventListener('click', () => {
+      app.innerHTML = 'hello world'
+    })
+  </script>
+</body>
+
+</html>

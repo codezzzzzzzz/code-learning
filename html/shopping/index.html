@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">
+  <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+</head>
+
+<body>
+  <div class="home">
+    <div class="head y-center">
+      <div class="nav y-center">
+        <div class="logo y-center">
+          <img src="./images/tao.png" alt="">
+        </div>
+        <div class="nav-list">
+          <ul>
+            <li>首页</li>
+            <li>商品分类</li>
+            <li>订单中心</li>
+            <li>购物车</li>
+            <li>个人中心</li>
+          </ul>
+        </div>
+      </div>
+      <div class="login-register">
+        <button>登录</button>
+        <button>注册</button>
+      </div>
+    </div>
+    <div class="search">
+      <div class="search-content">
+        <div class="search-box y-center">
+          <div class="search-icon"></div>
+          <input type="text" placeholder="搜索商品">
+          <button class="search-btn">搜索</button>
+        </div>
+        <div class="hot-search">
+          热门搜索：
+          <span>智能手机</span>
+          <span>笔记本电脑</span>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="content-sort">
+        <ul>
+          <li>全部分类</li>
+          <li>服装</li>
+          <li>数码</li>
+          <li>家居</li>
+          <li>美妆</li>
+          <li>食品</li>
+          <li>母婴</li>
+          <li>运动</li>
+        </ul>
+      </div>
+      <div class="content-main">
+        <div class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="https://pic.616pic.com/bg_w1180/00/12/25/QUD4hcyQN9.jpg!/fh/300" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="https://pic.616pic.com/bg_w1180/00/24/30/OQtEUMQkvk.jpg!/fh/300" alt="">
+            </div>
+            <div class="swiper-slide">
+              <img src="https://pic.616pic.com/bg_w1180/00/12/17/yMKGy2QVzs.jpg!/fw/1120" alt="">
+            </div>
+          </div>
+          <!-- 如果需要分页器 -->
+          <div class="swiper-pagination"></div>
+        </div>
+        <div class="special-goods">
+          <div class="special-goods__title">
+            特色商品推荐
+          </div>
+          <ul class="special-goods__list">
+            <li>
+              <div class="pic">
+                <img src="./images/gift-548290_640.jpg" alt="">
+              </div>
+              <p class="name">高端无线耳机</p>
+              <p class="price">¥1299</p>
+            </li>
+            <li>
+              <div class="pic">
+                <img src="./images/pc-2457169_640.jpg" alt="">
+              </div>
+              <p class="name">高端无线耳机</p>
+              <p class="price">¥1299</p>
+            </li>
+            <li>
+              <div class="pic">
+                <img src="./images/i-phone-2547677_640.jpg" alt="">
+              </div>
+              <p class="name">高端无线耳机</p>
+              <p class="price">¥1299</p>
+            </li>
+            <li>
+              <div class="pic">
+                <img src="./images/i-phone-2547677_640.jpg" alt="">
+              </div>
+              <p class="name">高端无线耳机</p>
+              <p class="price">¥1299</p>
+            </li>
+            <li>
+              <div class="pic">
+                <img src="./images/i-phone-2547677_640.jpg" alt="">
+              </div>
+              <p class="name">高端无线耳机</p>
+              <p class="price">¥1299</p>
+            </li>
+            <li>
+              <div class="pic">
+                <img src="./images/i-phone-2547677_640.jpg" alt="">
+              </div>
+              <p class="name">高端无线耳机</p>
+              <p class="price">¥1299</p>
+            </li>
+          </ul>
+        </div>
+        <div class="time-limited">
+
+        </div>
+      </div>
+    </div>
+    <div class="footer"></div>
+  </div>
+
+  <script>
+    var mySwiper = new Swiper('.swiper', {
+      loop: true, // 循环模式选项
+
+      // 如果需要分页器
+      pagination: {
+        el: '.swiper-pagination',
+      }
+    })        
+  </script>
+</body>
+
+</html>

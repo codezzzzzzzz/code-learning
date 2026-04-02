@@ -1,0 +1,99 @@
+const http = require('http');
+const multiparty = require('multiparty');
+const path = require('path');
+const fs = require('fs-extra');
+
+const UPLOAD_DIR = path.resolve(__dirname, 'qiepian')
+
+// 解析post请求
+const resolvePost = (req) => {
+  return new Promise((resolve) => {
+    let chunk = ''
+    req.on('data', (data) => {
+      chunk += data
+    })
+    req.on('end', () => {
+      resolve(JSON.parse(chunk))
+    })
+  })
+}
+// 合并切片
+const mergeFileChunks = async(filePath, fileName, size) => {
+  const chunkDir = path.resolve(UPLOAD_DIR, `${fileName}-chunks`)
+  let chunkPaths = fs.readdirSync(chunkDir)
+  chunkPaths.sort((a, b) => a.split('-').pop() - b.split('-').pop())
+  
+  const arr = chunkPaths.map((chunkPath, index) => {
+    return pipeStream(
+      path.resolve(chunkDir, chunkPath),
+      fs.createWriteStream(filePath, {
+        start: index * size,
+        end: (index + 1) * size
+      })
+    )
+  })
+  await Promise.all(arr)
+  
+}
+// pipeStream
+const pipeStream = (path, writeStream) => {
+  return new Promise((resolve) => {
+    const readStream = fs.createReadStream(path) // 读取流
+    readStream.on('end', () => {
+      fs.unlinkSync(path) // 删除文件
+      resolve()
+    })
+    readStream.pipe(writeStream)
+  })
+}
+
+
+
+const server = http.createServer(async(req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  if (req.method === 'OPTIONS') {
+    res.writeHead(200);
+    res.end();
+    return;
+  }
+
+  if (req.url === '/upload') {
+    const form = new multiparty.Form();
+    form.parse(req, async(err, fields, files) => {
+      // console.log(fields, files);
+      if (err) {
+        console.log(err)
+        return 
+      }
+
+      const [ file ] = files.file
+      const [ fileName ] = fields.fileName
+      const [ chunkName ] = fields.chunkName
+      // 保存片段
+      const chunkDir = path.resolve(UPLOAD_DIR, `${fileName}-chunks`)
+      // console.log(chunkDir);
+      
+      // 判断文件夹是否存在
+      if (!fs.existsSync(chunkDir)) {
+        await fs.mkdirs(chunkDir)
+      }
+      fs.move(file.path, `${chunkDir}/${chunkName}`)
+
+      res.end('切片上传成功')
+    })
+  }
+
+  if (req.url === '/merge') {  // 该合并某一个文件切片了
+    const data = await resolvePost(req)
+    const { fileName, size } = data
+    const filePath = path.resolve(UPLOAD_DIR, fileName)
+    // 将 path 路径对应的文件夹下的所有文件合并
+    await mergeFileChunks(filePath, fileName, size)
+    res.end('文件合并成功')
+  }
+})
+
+server.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});

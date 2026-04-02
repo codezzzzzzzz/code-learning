@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input type="text" disabled>
+
+    <ul @click="add">
+      <li v-for="item in message" :key="item">{{ item }}</li>
+    </ul>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue
+  
+    createApp({
+      setup() {
+        const message = ref([1, 2])
+
+        const add = () => {
+          message.value.push(message.value.length + 1)
+        }
+
+        return {
+          message,
+          add
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>

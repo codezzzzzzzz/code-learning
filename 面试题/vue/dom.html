@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <div id="app">
+    <p class="p">文本内容</p>
+    <h3>{{count}}</h3>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue
+
+    createApp({
+      setup() {
+        const count = ref(1)
+        return {
+          count
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>
+
+{
+  tag: 'div',
+  props: {
+    id: 'app'
+  },
+  children: [
+    {
+      tag: 'p',
+      props: {
+        class: 'p'
+      },
+      children: '文本内容'
+    },
+    {
+      tag: 'h3',
+      children: '0'
+    }
+  ]
+}
+
+
+{
+  tag: 'div',
+  props: {
+    id: 'app'
+  },
+  children: [
+    {
+      tag: 'p',
+      props: {
+        class: 'p'
+      },
+      children: '文本内容'
+    },
+    {
+      tag: 'h3',
+      children: '1'
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>localStorage</h1>
+  <button id="save">save</button>
+  <button id="get">get</button>
+  <button id="remove">remove</button>
+  <button id="clear">clear</button>
+
+  <script>
+    let btn = document.getElementById('save');
+    btn.onclick = function() {
+      const obj = {
+        name: 'zs',
+        age: 18,
+        sex: '男',
+        address: '北京'
+      }
+      localStorage.setItem('user', JSON.stringify(obj))
+    }
+  
+
+
+    let btn2 = document.getElementById('get');
+    btn2.onclick = function() {
+      const user = localStorage.getItem('user')
+      console.log(JSON.parse(user))
+    }
+  
+    
+    let btn3 = document.getElementById('remove');
+    btn3.onclick = function() {
+      localStorage.removeItem('user')
+    }
+
+
+    let btn4 = document.getElementById('clear');
+    btn4.onclick = function() {
+      localStorage.clear()
+    }
+  </script>
+</body>
+</html>

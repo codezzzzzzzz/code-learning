@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <div id="app">
+    <div class="box" v-if="item !== 2" v-for="item in list">{{item}}</div>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue
+
+    createApp({
+      setup() {
+        const list = ref([1, 2, 3])
+        const show = ref(false)
+
+        return {
+          list,
+          show
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+
+</html>

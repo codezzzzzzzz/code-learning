@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #box{
+      width: 320px;
+      height: 200px;
+      position: fixed;
+      left: calc(50% - 160px);
+    }
+    .textBox{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 320px;
+      height: 200px;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 200px;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div id="box">
+    <div class="textBox">谢谢惠顾</div>
+    <canvas id="canvasBox"></canvas>
+  </div>
+
+  <script>
+    const box = document.getElementById('box')
+    const canvas = document.getElementById('canvasBox')
+    canvas.width = 320
+    canvas.height = 200
+    const ctx = canvas.getContext('2d')  // 创建画布
+    ctx.fillStyle = 'transparent' // 底色
+    ctx.fillRect(0, 0, 320, 200)
+    ctx.fillStyle = 'grey'  // 准备填充色
+    ctx.fillRect(0, 0, 320, 200)
+    ctx.globalCompositeOperation = 'destination-out'
+
+
+
+    // 鼠标摁住不放，在 box 上移动时，擦除颜色
+    let flag = 0
+    // 监听鼠标摁下
+    canvas.addEventListener('mousedown', () => {
+      flag = 1
+    })
+    // 监听鼠标放开
+    canvas.addEventListener('mouseup', () => {
+      flag = 0
+    })
+
+    // 鼠标移动
+    // 当用户鼠标一直是摁住的状态
+    canvas.addEventListener('mousemove', (e) => {
+      e.preventDefault()
+      if (flag === 1) {
+        // 擦除
+        // 准备一个正方形
+        // 获取到鼠标摁下那一刻的坐标
+        const x = e.x - box.offsetLeft;
+        const y = e.y - box.offsetTop;
+
+        ctx.beginPath(); // 落笔
+        ctx.rect(x, y, 20, 20)
+        ctx.fill()
+      }
+    })
+
+
+
+    // 控制textBox容器中的文本内容是随机的
+    
+  </script>
+</body>
+</html>

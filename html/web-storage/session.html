@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>sessionStorage</h1>
+  <button id="save">save</button>
+  <button id="get">get</button>
+  <button id="remove">remove</button>
+  <button id="clear">clear</button>
+
+  <script>
+    let btn = document.getElementById('save');
+    btn.onclick = function() {
+      const obj = {
+        name: 'zs',
+        age: 18,
+        sex: '男',
+        address: '北京'
+      }
+
+      
+      // for (let i = 0; i < 100000; i++) {
+      //   sessionStorage.setItem(`user${i}`, JSON.stringify(obj))
+      // }
+
+      try {
+        sessionStorage.setItem('user', JSON.stringify(obj))
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'QuotaExceededError') {
+          console.log('超出了sessionStorage的容量限制')
+          // 清除所有的sessionStorage  || 清除最早的sessionStorage
+          sessionStorage.clear()
+          sessionStorage.setItem('user', JSON.stringify(obj))
+        }
+        console.log(error)
+      }
+      
+    }
+  
+
+
+    let btn2 = document.getElementById('get');
+    btn2.onclick = function() {
+      const user = sessionStorage.getItem('user')
+      console.log(JSON.parse(user))
+    }
+  
+    
+    let btn3 = document.getElementById('remove');
+    btn3.onclick = function() {
+      sessionStorage.removeItem('user')
+    }
+
+
+    let btn4 = document.getElementById('clear');
+    btn4.onclick = function() {
+      sessionStorage.clear()
+    }
+  </script>
+</body>
+</html>
